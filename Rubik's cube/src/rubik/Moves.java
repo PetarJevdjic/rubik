@@ -25,6 +25,9 @@ public class Moves {
 	public static Boolean isScrambling = false; // za sprecavanje mesanja kocke ako je mesanje vec u toku
 	
 	public static int movesCount = 0;
+	public static Boolean newGame = false; // za startovanje tajmera i  brojaca poteza
+	public static Boolean gameInProgressOld = false;
+	public static Boolean gameInProgress = false;
 	
 	public Moves() {
 		// TODO Auto-generated constructor stub
@@ -248,7 +251,13 @@ public class Moves {
         	rubik[2][2][2] = B7;
         }
         
-        System.out.println("Solved = " + isSolved());
+        movesCount++;
+        if(isSolved())
+        {
+        	gameInProgressOld = gameInProgress;
+        	gameInProgress = false;
+        }
+//        System.out.println("Solved = " + isSolved());
 	}
 	
 	public static void copy()
@@ -257,6 +266,14 @@ public class Moves {
 			for(int j=0; j<3; j++)
 				for(int k=0; k<3; k++)
 					rubikOld[i][j][k] = rubik[i][j][k];
+	}
+	
+	public static void copy(String x[][][], String y[][][])
+	{
+		for(int i=0; i<3; i++)
+			for(int j=0; j<3; j++)
+				for(int k=0; k<3; k++)
+					y[i][j][k] = x[i][j][k];
 	}
 	
 	public static void printState() 
@@ -293,6 +310,9 @@ public class Moves {
 	
 	public static void Scramble(int n)
 	{
+		gameInProgress = false;
+		gameInProgressOld = false;
+		
 		String[] moves = {"F", "Fi", "B", "Bi", "L", "Li", "R", "Ri", "U", "Ui", "D", "Di"};
 		List<String> scramble = new ArrayList<String>();
 		int k=0;
@@ -320,7 +340,7 @@ public class Moves {
 			moveFlagOld = moveFlag;
 			moveFlag = true;
 			try {
-				Thread.sleep(1200);
+				Thread.sleep(600);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -328,6 +348,9 @@ public class Moves {
 		});
 		
 		isScrambling = false;
+		resetMoves();
+		newGame = true;
+		gameInProgress = true;
 	}
 	
 	public static void resetMoves()

@@ -7,17 +7,33 @@ import java.util.Map;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.AmbientLight;
+import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.PointLight;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
+import javafx.scene.SubScene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.MeshView;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Transform;
@@ -25,6 +41,9 @@ import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
 public class Game extends Application {
+	
+	BorderPane UI;
+	Text info;
 	
 	Figures f = new Figures();
 	Controls c = new Controls();
@@ -38,6 +57,8 @@ public class Game extends Application {
 	
 	List<Double> rotationDif = new ArrayList<Double>();
 
+	private double gameStart = 0;
+	
 	public Game() {
 		// TODO Auto-generated constructor stub
 	}
@@ -46,6 +67,12 @@ public class Game extends Application {
 		@Override
 		public void handle(long now) {
 			double timeNow = now * 1e-9;
+			
+			if(Moves.newGame)
+			{
+				gameStart = timeNow;
+				Moves.newGame = false;
+			}
 			
 			if(Moves.moveFlag && !Moves.moveFlagOld) //znaci da pocinje novi potez, promenio se flag sa false na true, sacuvaj sve sto je potrebno
 			{
@@ -199,7 +226,7 @@ public class Game extends Application {
 			double time = timeNow - timeStart;     // Vreme proteklo od starta animacije
 			double t = time % 1;
 			
-			double k = Math.sin(t * Math.PI/2); // ease out sine
+			double k = Math.sin(t/0.5 * Math.PI/2); // ease out sine
 			
 			if(Moves.moveFlag)
 			{
@@ -218,7 +245,7 @@ public class Game extends Application {
 						if(Moves.move.equals("U")) d += 90.0f;
 						else if(Moves.move.equals("Ui")) d -= 90.0f;
 						double r = s*(1 - k) + (d * k);
-						if((Math.abs(r-d) < epsilon) || time>0.99)
+						if((Math.abs(r-d) < epsilon) || time>0.49)
 						{
 							Moves.moveFlagOld = false;
 							Moves.moveFlag = false;
@@ -254,7 +281,7 @@ public class Game extends Application {
 						if(Moves.move.equals("D")) d -= 90.0f;
 						else if(Moves.move.equals("Di")) d += 90.0f;
 						double r = s*(1 - k) + (d * k);
-						if((Math.abs(r-d) < epsilon) || time>0.99)
+						if((Math.abs(r-d) < epsilon) || time>0.49)
 						{
 							Moves.moveFlagOld = false;
 							Moves.moveFlag = false;
@@ -290,7 +317,7 @@ public class Game extends Application {
 						if(Moves.move.equals("L")) d += 90.0f;
 						else if(Moves.move.equals("Li")) d -= 90.0f;
 						double r = s*(1 - k) + (d * k);
-						if((Math.abs(r-d) < epsilon) || time>0.99)
+						if((Math.abs(r-d) < epsilon) || time>0.49)
 						{
 							Moves.moveFlagOld = false;
 							Moves.moveFlag = false;
@@ -326,7 +353,7 @@ public class Game extends Application {
 						if(Moves.move.equals("R")) d -= 90.0f;
 						else if(Moves.move.equals("Ri")) d += 90.0f;
 						double r = s*(1 - k) + (d * k);
-						if((Math.abs(r-d) < epsilon) || time>0.99)
+						if((Math.abs(r-d) < epsilon) || time>0.49)
 						{
 							Moves.moveFlagOld = false;
 							Moves.moveFlag = false;
@@ -363,7 +390,7 @@ public class Game extends Application {
 						if(Moves.move.equals("F")) d += 90.0f;
 						else if(Moves.move.equals("Fi")) d -= 90.0f;
 						double r = s*(1 - k) + (d * k);
-						if((Math.abs(r-d) < epsilon) || time>0.99)
+						if((Math.abs(r-d) < epsilon) || time>0.49)
 						{
 							Moves.moveFlagOld = false;
 							Moves.moveFlag = false;
@@ -399,7 +426,7 @@ public class Game extends Application {
 						if(Moves.move.equals("B")) d -= 90.0f;
 						else if(Moves.move.equals("Bi")) d += 90.0f;
 						double r = s*(1 - k) + (d * k);
-						if((Math.abs(r-d) < epsilon) || time>0.99)
+						if((Math.abs(r-d) < epsilon) || time>0.49)
 						{
 							Moves.moveFlagOld = false;
 							Moves.moveFlag = false;
@@ -422,6 +449,30 @@ public class Game extends Application {
 				}
 			}
 			
+			if(Moves.gameInProgress || Moves.gameInProgressOld) // u koliko je igra u toku ispisi proteklo vreme od starta i broj poteza
+			{
+				String text;
+				int min, sec, remaining;
+				double gameTime = timeNow - gameStart;
+				min = (int)(gameTime/60);
+				sec = (int)((gameTime%60)/1);
+				remaining = (int)(((gameTime%60)%1)*10);
+				
+				if(sec<10) text = String.format("\n   Time = %d:0%d:%d\n   Moves = %d", min, sec, remaining, Moves.movesCount);
+					else text = String.format("\n   Time = %d:%d:%d\n   Moves = %d", min, sec, remaining, Moves.movesCount);
+				
+				if(Moves.gameInProgressOld) // ovaj deo se izvrsava ako je zaustavljeno vreme, odnosno doslo je do kraja igre
+				{
+					Moves.gameInProgressOld = false;
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Information Dialog");
+					alert.setHeaderText("Congratulations, you have successfully solved the Rubik's cube!");
+					alert.show();
+				}
+				
+				info.setText(text);
+//				System.out.println(text);
+			}
 		}
 	};
 
@@ -458,19 +509,67 @@ public class Game extends Application {
 		camera.setFarClip(10000);
 		camera.setNearClip(1);
 
-		Scene scene = new Scene(root, 800, 600, true, SceneAntialiasing.BALANCED);
-		scene.setFill(new RadialGradient(225, 0.85, 300, 300, 500, false, CycleMethod.NO_CYCLE,
-				new Stop[] { new Stop(0f, Color.BLUE), new Stop(1f, Color.LIGHTBLUE) }));
-		scene.setCamera(camera);
+		SubScene main = new SubScene(root, 800, 600, true, SceneAntialiasing.BALANCED);
+		main.setCamera(camera);
 
+		// pravljenje UI sa padajucim menijem i informacijama o toku igre
+		Menu file = new Menu("File");
+		
+		MenuItem option1 = new MenuItem("New Game (Enter)");
+		MenuItem option2 = new MenuItem("Reset rotation (Space)");
+		MenuItem option3 = new MenuItem("Fullscreen (F12)");
+		MenuItem option4 = new MenuItem("Exit game (Esc)");
+		
+		option1.setOnAction(e -> {
+			c.newGame();
+		});
+		
+		option2.setOnAction(e -> {
+			c.resetPosition();
+		});
+		
+		option3.setOnAction(e -> {
+			c.fullScreen(primaryStage);
+		});
+		
+		option4.setOnAction(e -> {
+			c.quit();
+		});
+		
+		file.getItems().addAll(option1, option2, option3, option4);
+		
+		MenuBar menuBar = new MenuBar();
+		menuBar.getMenus().add(file);
+		
+		info = new Text("\n   Time = 0:00:00\n   Moves = 0");
+		info.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
+		info.setFill(Color.WHITE);
+		
+		UI = new BorderPane();
+		UI.setTop(menuBar);
+		UI.setBottom(info);
+		UI.setPrefWidth(1920);
+		
+		// zbog UI sam morao da koristim subScene, a posto Gradient pozadine ne funkcionisu sa SubScene, ovo je work around
+		// sa postavljanjem gradient pozadine na AnchorPane u koji se dodaju pod scene
+		AnchorPane pane = new AnchorPane();
+		pane.setDepthTest(DepthTest.ENABLE);
+		pane.getChildren().addAll(main, UI);
+		final Scene scene = new Scene(pane, 800, 600, true, SceneAntialiasing.BALANCED);
+		RadialGradient radialGradient = new RadialGradient(225, 0.85, 300, 300, 500, false, CycleMethod.NO_CYCLE,
+				new Stop[] { new Stop(0f, Color.BLUE), new Stop(1f, Color.LIGHTBLUE) });
+		pane.setBackground(new Background(new BackgroundFill(radialGradient, CornerRadii.EMPTY, Insets.EMPTY)));
+		
+		main.heightProperty().bind(pane.heightProperty());
+		main.widthProperty().bind(pane.widthProperty());
+		
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Rubik's cube");
 		primaryStage.show();
 
 		c.initControls(model, scene, primaryStage, camera);
 		
-		animation.start();
-		
+		animation.start();		
 	}
 	
 	public static void main(String[] args) {

@@ -67,28 +67,15 @@ public class Controls {
 			}
 			else if (KeyCode.F12.equals(event.getCode()))
 			{
-				if (stage.isFullScreen())
-				{
-					stage.setFullScreen(false);
-				}
-				else
-				{
-					stage.setFullScreen(true);
-				}
+				fullScreen(stage);
 			}
 			else if (KeyCode.ESCAPE.equals(event.getCode()))
 			{
-				Alert alert = new Alert(AlertType.CONFIRMATION);
-				alert.setTitle("Confirmation Dialog");
-				alert.setHeaderText("Are you sure you want to quit?");
-
-				Optional<ButtonType> result = alert.showAndWait();
-				if (result.get() == ButtonType.OK){
-					System.out.println("Application terminated.");
-					System.exit(1);
-				} else {
-
-				}
+				quit();
+			}
+			else if (KeyCode.ENTER.equals(event.getCode()))
+			{
+				newGame();
 			}
 			else if (KeyCode.L.equals(event.getCode()))
 			{
@@ -240,28 +227,6 @@ public class Controls {
 					Moves.moveFlag = true;
 				}
 			}
-			else if (KeyCode.ENTER.equals(event.getCode()))
-			{
-				if(!Moves.isScrambling)
-				{
-					Alert alert = new Alert(AlertType.CONFIRMATION);
-					alert.setTitle("Confirmation Dialog");
-					alert.setHeaderText("Are you sure you scramble the cube?");
-					alert.setContentText("You will start a new game and lose all your current progress.");
-
-					Optional<ButtonType> result = alert.showAndWait();
-					if (result.get() == ButtonType.OK){
-						Thread t = new Thread() {
-						    public void run() {
-						        Moves.Scramble(25);
-						    }
-						};
-						t.start();
-					} else {
-
-					}
-				}
-			}
 		});
 
 		stage.addEventHandler(ScrollEvent.SCROLL, event -> {
@@ -276,5 +241,79 @@ public class Controls {
 		angleX.set(0);
 		angleY.set(0);
 		angleZ.set(0);
+	}
+	
+	public void newGame()
+	{
+		if(!Moves.isScrambling)
+		{
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Confirmation Dialog");
+			alert.setHeaderText("Are you sure you want to start a new game?");
+			alert.setContentText("You will scramble the cube and lose all your current progress.");
+	
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK){
+				Thread t = new Thread() {
+				    public void run() {
+				        Moves.Scramble(25);
+				    }
+				};
+				t.start();
+			}
+		}
+		else
+		{
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Information Dialog");
+			alert.setHeaderText("You can't start a new game while the cube is scrambling.");	
+			alert.showAndWait();
+		}
+	}
+	
+	public void scrambleControl()
+	{
+		if(!Moves.isScrambling)
+		{
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Confirmation Dialog");
+			alert.setHeaderText("Are you sure you want to scramble the cube?");
+			alert.setContentText("You will lose all your current progress.");
+
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK){
+				Thread t = new Thread() {
+				    public void run() {
+				        Moves.Scramble(25);
+				    }
+				};
+				t.start();
+			}
+		}
+	}
+	
+	public void fullScreen(Stage primaryStage)
+	{
+		if (primaryStage.isFullScreen())
+		{
+			primaryStage.setFullScreen(false);
+		}
+		else
+		{
+			primaryStage.setFullScreen(true);
+		}
+	}
+	
+	public void quit()
+	{
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Confirmation Dialog");
+		alert.setHeaderText("Are you sure you want to quit?");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK){
+			System.out.println("Application terminated by user.");
+			System.exit(1);
+		}
 	}
 }
