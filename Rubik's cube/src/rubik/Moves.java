@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Moves {
 	
-	public static final String[][][] solved={{{"F1","F2","F3"},{"F4","F5","F6"},{"F7","F8","F9"}},
+	public static String[][][] solved={{{"F1","F2","F3"},{"F4","F5","F6"},{"F7","F8","F9"}},
             {{"S1","S2","S3"},{"S4","S5","S6"},{"S7","S8","S9"}},
             {{"B1","B2","B3"},{"B4","B5","B6"},{"B7","B8","B9"}}};
 	
@@ -258,6 +258,514 @@ public class Moves {
         	gameInProgress = false;
         }
 //        System.out.println("Solved = " + isSolved());
+	}
+	
+	// funckcija za rotiranje cele kocke oko X, Y i Z ose
+	public static void turnCube(String move){ 
+        if(move.equals("X"))
+        {
+        	// rubik
+        	String F1 = rubik[0][0][0];
+    		String F2 = rubik[0][0][1];
+    		String F3 = rubik[0][0][2];
+    		String F4 = rubik[0][1][0];
+    		String F5 = rubik[0][1][1];
+    		String F6 = rubik[0][1][2];
+    		String S1 = rubik[1][0][0];
+    		String S2 = rubik[1][0][1];
+    		String S3 = rubik[1][0][2];
+    		String B1 = rubik[2][0][0];
+    		String B2 = rubik[2][0][1];
+    		String B3 = rubik[2][0][2];
+    		
+            rubik[0][0][0] = rubik[0][2][0];
+            rubik[0][0][1] = rubik[0][2][1];
+            rubik[0][0][2] = rubik[0][2][2];
+            rubik[0][1][0] = rubik[1][2][0];
+            rubik[0][1][1] = rubik[1][2][1];
+            rubik[0][1][2] = rubik[1][2][2];
+            rubik[0][2][0] = rubik[2][2][0];
+            rubik[0][2][1] = rubik[2][2][1];
+            rubik[0][2][2] = rubik[2][2][2];
+            
+            rubik[1][0][0] = F4;
+            rubik[1][0][1] = F5;
+            rubik[1][0][2] = F6;
+            rubik[1][2][0] = rubik[2][1][0];
+            rubik[1][2][1] = rubik[2][1][1];
+            rubik[1][2][2] = rubik[2][1][2];
+            
+            rubik[2][0][0] = F1;
+            rubik[2][0][1] = F2;
+            rubik[2][0][2] = F3;
+            rubik[2][1][0] = S1;
+            rubik[2][1][1] = S2;
+            rubik[2][1][2] = S3;
+            rubik[2][2][0] = B1;
+            rubik[2][2][1] = B2;
+            rubik[2][2][2] = B3;
+            
+         // solved
+        	F1 = solved[0][0][0];
+    		F2 = solved[0][0][1];
+    		F3 = solved[0][0][2];
+    		F4 = solved[0][1][0];
+    		F5 = solved[0][1][1];
+    		F6 = solved[0][1][2];
+    		S1 = solved[1][0][0];
+    		S2 = solved[1][0][1];
+    		S3 = solved[1][0][2];
+    		B1 = solved[2][0][0];
+    		B2 = solved[2][0][1];
+    		B3 = solved[2][0][2];
+    		
+            solved[0][0][0] = solved[0][2][0];
+            solved[0][0][1] = solved[0][2][1];
+            solved[0][0][2] = solved[0][2][2];
+            solved[0][1][0] = solved[1][2][0];
+            solved[0][1][1] = solved[1][2][1];
+            solved[0][1][2] = solved[1][2][2];
+            solved[0][2][0] = solved[2][2][0];
+            solved[0][2][1] = solved[2][2][1];
+            solved[0][2][2] = solved[2][2][2];
+            
+            solved[1][0][0] = F4;
+            solved[1][0][1] = F5;
+            solved[1][0][2] = F6;
+            solved[1][2][0] = solved[2][1][0];
+            solved[1][2][1] = solved[2][1][1];
+            solved[1][2][2] = solved[2][1][2];
+            
+            solved[2][0][0] = F1;
+            solved[2][0][1] = F2;
+            solved[2][0][2] = F3;
+            solved[2][1][0] = S1;
+            solved[2][1][1] = S2;
+            solved[2][1][2] = S3;
+            solved[2][2][0] = B1;
+            solved[2][2][1] = B2;
+            solved[2][2][2] = B3;
+        }
+        else if(move.equals("Xi"))
+        {
+        	// rubik
+        	String F1 = rubik[0][0][0];
+    		String F2 = rubik[0][0][1];
+    		String F3 = rubik[0][0][2];
+    		String F4 = rubik[0][1][0];
+    		String F5 = rubik[0][1][1];
+    		String F6 = rubik[0][1][2];
+    		String F7 = rubik[0][2][0];
+    		String F8 = rubik[0][2][1];
+    		String F9 = rubik[0][2][2];
+    		String S7 = rubik[1][2][0];
+    		String S8 = rubik[1][2][1];
+    		String S9 = rubik[1][2][2];
+    		
+            rubik[0][0][0] = rubik[2][0][0];
+            rubik[0][0][1] = rubik[2][0][1];
+            rubik[0][0][2] = rubik[2][0][2];
+            rubik[0][1][0] = rubik[1][0][0];
+            rubik[0][1][1] = rubik[1][0][1];
+            rubik[0][1][2] = rubik[1][0][2];
+            rubik[0][2][0] = F1;
+            rubik[0][2][1] = F2;
+            rubik[0][2][2] = F3;
+            
+            rubik[1][0][0] = rubik[2][1][0];
+            rubik[1][0][1] = rubik[2][1][1];
+            rubik[1][0][2] = rubik[2][1][2];
+            rubik[1][2][0] = F4;
+            rubik[1][2][1] = F5;
+            rubik[1][2][2] = F6;
+            
+            rubik[2][0][0] = rubik[2][2][0];
+            rubik[2][0][1] = rubik[2][2][1];
+            rubik[2][0][2] = rubik[2][2][2];
+            rubik[2][1][0] = S7;
+            rubik[2][1][1] = S8;
+            rubik[2][1][2] = S9;
+            rubik[2][2][0] = F7;
+            rubik[2][2][1] = F8;
+            rubik[2][2][2] = F9;
+            
+         // solved
+        	F1 = solved[0][0][0];
+    		F2 = solved[0][0][1];
+    		F3 = solved[0][0][2];
+    		F4 = solved[0][1][0];
+    		F5 = solved[0][1][1];
+    		F6 = solved[0][1][2];
+    		F7 = solved[0][2][0];
+    		F8 = solved[0][2][1];
+    		F9 = solved[0][2][2];
+    		S7 = solved[1][2][0];
+    		S8 = solved[1][2][1];
+    		S9 = solved[1][2][2];
+    		
+            solved[0][0][0] = solved[2][0][0];
+            solved[0][0][1] = solved[2][0][1];
+            solved[0][0][2] = solved[2][0][2];
+            solved[0][1][0] = solved[1][0][0];
+            solved[0][1][1] = solved[1][0][1];
+            solved[0][1][2] = solved[1][0][2];
+            solved[0][2][0] = F1;
+            solved[0][2][1] = F2;
+            solved[0][2][2] = F3;
+            
+            solved[1][0][0] = solved[2][1][0];
+            solved[1][0][1] = solved[2][1][1];
+            solved[1][0][2] = solved[2][1][2];
+            solved[1][2][0] = F4;
+            solved[1][2][1] = F5;
+            solved[1][2][2] = F6;
+            
+            solved[2][0][0] = solved[2][2][0];
+            solved[2][0][1] = solved[2][2][1];
+            solved[2][0][2] = solved[2][2][2];
+            solved[2][1][0] = S7;
+            solved[2][1][1] = S8;
+            solved[2][1][2] = S9;
+            solved[2][2][0] = F7;
+            solved[2][2][1] = F8;
+            solved[2][2][2] = F9;
+        }
+        else if(move.equals("Y"))
+        {
+        	// rubik
+        	String F1 = rubik[0][0][0];
+    		String F2 = rubik[0][0][1];
+    		String F4 = rubik[0][1][0];
+    		String F5 = rubik[0][1][1];
+    		String F7 = rubik[0][2][0];
+    		String F8 = rubik[0][2][1];
+    		String S1 = rubik[1][0][0];
+    		String S4 = rubik[1][1][0];
+    		String S7 = rubik[1][2][0];
+    		String B1 = rubik[2][0][0];
+    		String B4 = rubik[2][1][0];
+    		String B7 = rubik[2][2][0];
+    		
+            rubik[0][0][0] = rubik[0][0][2];
+            rubik[0][0][1] = rubik[1][0][2];
+            rubik[0][0][2] = rubik[2][0][2];
+            rubik[0][1][0] = rubik[0][1][2];
+            rubik[0][1][1] = rubik[1][1][2];
+            rubik[0][1][2] = rubik[2][1][2];
+            rubik[0][2][0] = rubik[0][2][2];
+            rubik[0][2][1] = rubik[1][2][2];
+            rubik[0][2][2] = rubik[2][2][2];
+            
+            rubik[1][0][0] = F2;
+            rubik[1][0][2] = rubik[2][0][1];
+            rubik[1][1][0] = F5;
+            rubik[1][1][2] = rubik[2][1][1];
+            rubik[1][2][0] = F8;
+            rubik[1][2][2] = rubik[2][2][1];
+            
+            rubik[2][0][0] = F1;
+            rubik[2][0][1] = S1;
+            rubik[2][0][2] = B1;
+            rubik[2][1][0] = F4;
+            rubik[2][1][1] = S4;
+            rubik[2][1][2] = B4;
+            rubik[2][2][0] = F7;
+            rubik[2][2][1] = S7;
+            rubik[2][2][2] = B7;
+            
+         // solved
+        	F1 = solved[0][0][0];
+    		F2 = solved[0][0][1];
+    		F4 = solved[0][1][0];
+    		F5 = solved[0][1][1];
+    		F7 = solved[0][2][0];
+    		F8 = solved[0][2][1];
+    		S1 = solved[1][0][0];
+    		S4 = solved[1][1][0];
+    		S7 = solved[1][2][0];
+    		B1 = solved[2][0][0];
+    		B4 = solved[2][1][0];
+    		B7 = solved[2][2][0];
+    		
+            solved[0][0][0] = solved[0][0][2];
+            solved[0][0][1] = solved[1][0][2];
+            solved[0][0][2] = solved[2][0][2];
+            solved[0][1][0] = solved[0][1][2];
+            solved[0][1][1] = solved[1][1][2];
+            solved[0][1][2] = solved[2][1][2];
+            solved[0][2][0] = solved[0][2][2];
+            solved[0][2][1] = solved[1][2][2];
+            solved[0][2][2] = solved[2][2][2];
+            
+            solved[1][0][0] = F2;
+            solved[1][0][2] = solved[2][0][1];
+            solved[1][1][0] = F5;
+            solved[1][1][2] = solved[2][1][1];
+            solved[1][2][0] = F8;
+            solved[1][2][2] = solved[2][2][1];
+            
+            solved[2][0][0] = F1;
+            solved[2][0][1] = S1;
+            solved[2][0][2] = B1;
+            solved[2][1][0] = F4;
+            solved[2][1][1] = S4;
+            solved[2][1][2] = B4;
+            solved[2][2][0] = F7;
+            solved[2][2][1] = S7;
+            solved[2][2][2] = B7;
+        }
+        else if(move.equals("Yi"))
+        {
+        	// rubik
+        	String F1 = rubik[0][0][0];
+    		String F2 = rubik[0][0][1];
+    		String F3 = rubik[0][0][2];
+    		String F4 = rubik[0][1][0];
+    		String F5 = rubik[0][1][1];
+    		String F6 = rubik[0][1][2];
+    		String F7 = rubik[0][2][0];
+    		String F8 = rubik[0][2][1];
+    		String F9 = rubik[0][2][2];
+    		String S3 = rubik[1][0][2];
+    		String S6 = rubik[1][1][2];
+    		String S9 = rubik[1][2][2];
+    		
+            rubik[0][0][0] = rubik[2][0][0];
+            rubik[0][0][1] = rubik[1][0][0];
+            rubik[0][0][2] = F1;
+            rubik[0][1][0] = rubik[2][1][0];
+            rubik[0][1][1] = rubik[1][1][0];
+            rubik[0][1][2] = F4;
+            rubik[0][2][0] = rubik[2][2][0];
+            rubik[0][2][1] = rubik[1][2][0];
+            rubik[0][2][2] = F7;
+            
+            rubik[1][0][0] = rubik[2][0][1];
+            rubik[1][0][2] = F2;
+            rubik[1][1][0] = rubik[2][1][1];
+            rubik[1][1][2] = F5;
+            rubik[1][2][0] = rubik[2][2][1];
+            rubik[1][2][2] = F8;
+            
+            rubik[2][0][0] = rubik[2][0][2];
+            rubik[2][0][1] = S3;
+            rubik[2][0][2] = F3;
+            rubik[2][1][0] = rubik[2][1][2];
+            rubik[2][1][1] = S6;
+            rubik[2][1][2] = F6;
+            rubik[2][2][0] = rubik[2][2][2];
+            rubik[2][2][1] = S9;
+            rubik[2][2][2] = F9;
+            
+         // solved
+        	F1 = solved[0][0][0];
+    		F2 = solved[0][0][1];
+    		F3 = solved[0][0][2];
+    		F4 = solved[0][1][0];
+    		F5 = solved[0][1][1];
+    		F6 = solved[0][1][2];
+    		F7 = solved[0][2][0];
+    		F8 = solved[0][2][1];
+    		F9 = solved[0][2][2];
+    		S3 = solved[1][0][2];
+    		S6 = solved[1][1][2];
+    		S9 = solved[1][2][2];
+    		
+            solved[0][0][0] = solved[2][0][0];
+            solved[0][0][1] = solved[1][0][0];
+            solved[0][0][2] = F1;
+            solved[0][1][0] = solved[2][1][0];
+            solved[0][1][1] = solved[1][1][0];
+            solved[0][1][2] = F4;
+            solved[0][2][0] = solved[2][2][0];
+            solved[0][2][1] = solved[1][2][0];
+            solved[0][2][2] = F7;
+            
+            solved[1][0][0] = solved[2][0][1];
+            solved[1][0][2] = F2;
+            solved[1][1][0] = solved[2][1][1];
+            solved[1][1][2] = F5;
+            solved[1][2][0] = solved[2][2][1];
+            solved[1][2][2] = F8;
+            
+            solved[2][0][0] = solved[2][0][2];
+            solved[2][0][1] = S3;
+            solved[2][0][2] = F3;
+            solved[2][1][0] = solved[2][1][2];
+            solved[2][1][1] = S6;
+            solved[2][1][2] = F6;
+            solved[2][2][0] = solved[2][2][2];
+            solved[2][2][1] = S9;
+            solved[2][2][2] = F9;
+        }
+        else if(move.equals("Z"))
+        {
+        	// rubik
+        	String F1 = rubik[0][0][0];
+    		String F2 = rubik[0][0][1];
+    		String F3 = rubik[0][0][2];
+    		String F6 = rubik[0][1][2];
+    		String S1 = rubik[1][0][0];
+    		String S2 = rubik[1][0][1];
+    		String S3 = rubik[1][0][2];
+    		String S6 = rubik[1][1][2];
+    		String B1 = rubik[2][0][0];
+    		String B2 = rubik[2][0][1];
+    		String B3 = rubik[2][0][2];
+    		String B6 = rubik[2][1][2];
+    		
+            rubik[0][0][0] = rubik[0][2][0];
+            rubik[0][0][1] = rubik[0][1][0];
+            rubik[0][0][2] = F1;
+            rubik[0][1][0] = rubik[0][2][1];
+            rubik[0][1][2] = F2;
+            rubik[0][2][0] = rubik[0][2][2];
+            rubik[0][2][1] = F6;
+            rubik[0][2][2] = F3;
+            
+            rubik[1][0][0] = rubik[1][2][0];
+            rubik[1][0][1] = rubik[1][1][0];
+            rubik[1][0][2] = S1;
+            rubik[1][1][0] = rubik[1][2][1];
+            rubik[1][1][2] = S2;
+            rubik[1][2][0] = rubik[1][2][2];
+            rubik[1][2][1] = S6;
+            rubik[1][2][2] = S3;
+            
+            rubik[2][0][0] = rubik[2][2][0];
+            rubik[2][0][1] = rubik[2][1][0];
+            rubik[2][0][2] = B1;
+            rubik[2][1][0] = rubik[2][2][1];
+            rubik[2][1][2] = B2;
+            rubik[2][2][0] = rubik[2][2][2];
+            rubik[2][2][1] = B6;
+            rubik[2][2][2] = B3;
+            
+         // solved
+        	F1 = solved[0][0][0];
+    		F2 = solved[0][0][1];
+    		F3 = solved[0][0][2];
+    		F6 = solved[0][1][2];
+    		S1 = solved[1][0][0];
+    		S2 = solved[1][0][1];
+    		S3 = solved[1][0][2];
+    		S6 = solved[1][1][2];
+    		B1 = solved[2][0][0];
+    		B2 = solved[2][0][1];
+    		B3 = solved[2][0][2];
+    		B6 = solved[2][1][2];
+    		
+            solved[0][0][0] = solved[0][2][0];
+            solved[0][0][1] = solved[0][1][0];
+            solved[0][0][2] = F1;
+            solved[0][1][0] = solved[0][2][1];
+            solved[0][1][2] = F2;
+            solved[0][2][0] = solved[0][2][2];
+            solved[0][2][1] = F6;
+            solved[0][2][2] = F3;
+            
+            solved[1][0][0] = solved[1][2][0];
+            solved[1][0][1] = solved[1][1][0];
+            solved[1][0][2] = S1;
+            solved[1][1][0] = solved[1][2][1];
+            solved[1][1][2] = S2;
+            solved[1][2][0] = solved[1][2][2];
+            solved[1][2][1] = S6;
+            solved[1][2][2] = S3;
+            
+            solved[2][0][0] = solved[2][2][0];
+            solved[2][0][1] = solved[2][1][0];
+            solved[2][0][2] = B1;
+            solved[2][1][0] = solved[2][2][1];
+            solved[2][1][2] = B2;
+            solved[2][2][0] = solved[2][2][2];
+            solved[2][2][1] = B6;
+            solved[2][2][2] = B3;
+        }
+        else if(move.equals("Zi"))
+        {
+        	// rubik
+        	String F1 = rubik[0][0][0];
+    		String F2 = rubik[0][0][1];
+    		String F4 = rubik[0][1][0];
+    		String F7 = rubik[0][2][0];
+    		String S1 = rubik[1][0][0];
+    		String S2 = rubik[1][0][1];
+    		String S4 = rubik[1][1][0];
+    		String S7 = rubik[1][2][0];
+    		String B1 = rubik[2][0][0];
+    		String B2 = rubik[2][0][1];
+    		String B4 = rubik[2][1][0];
+    		String B7 = rubik[2][2][0];
+    		
+            rubik[0][0][0] = rubik[0][0][2];
+            rubik[0][0][1] = rubik[0][1][2];
+            rubik[0][0][2] = rubik[0][2][2];
+            rubik[0][1][0] = F2;
+            rubik[0][1][2] = rubik[0][2][1];
+            rubik[0][2][0] = F1;
+            rubik[0][2][1] = F4;
+            rubik[0][2][2] = F7;
+            
+            rubik[1][0][0] = rubik[1][0][2];
+            rubik[1][0][1] = rubik[1][1][2];
+            rubik[1][0][2] = rubik[1][2][2];
+            rubik[1][1][0] = S2;
+            rubik[1][1][2] = rubik[1][2][1];
+            rubik[1][2][0] = S1;
+            rubik[1][2][1] = S4;
+            rubik[1][2][2] = S7;
+            
+            rubik[2][0][0] = rubik[2][0][2];
+            rubik[2][0][1] = rubik[2][1][2];
+            rubik[2][0][2] = rubik[2][2][2];
+            rubik[2][1][0] = B2;
+            rubik[2][1][2] = rubik[2][2][1];
+            rubik[2][2][0] = B1;
+            rubik[2][2][1] = B4;
+            rubik[2][2][2] = B7;
+            
+        	// solved
+        	F1 = solved[0][0][0];
+    		F2 = solved[0][0][1];
+    		F4 = solved[0][1][0];
+    		F7 = solved[0][2][0];
+    		S1 = solved[1][0][0];
+    		S2 = solved[1][0][1];
+    		S4 = solved[1][1][0];
+    		S7 = solved[1][2][0];
+    		B1 = solved[2][0][0];
+    		B2 = solved[2][0][1];
+    		B4 = solved[2][1][0];
+    		B7 = solved[2][2][0];
+    		
+            solved[0][0][0] = solved[0][0][2];
+            solved[0][0][1] = solved[0][1][2];
+            solved[0][0][2] = solved[0][2][2];
+            solved[0][1][0] = F2;
+            solved[0][1][2] = solved[0][2][1];
+            solved[0][2][0] = F1;
+            solved[0][2][1] = F4;
+            solved[0][2][2] = F7;
+            
+            solved[1][0][0] = solved[1][0][2];
+            solved[1][0][1] = solved[1][1][2];
+            solved[1][0][2] = solved[1][2][2];
+            solved[1][1][0] = S2;
+            solved[1][1][2] = solved[1][2][1];
+            solved[1][2][0] = S1;
+            solved[1][2][1] = S4;
+            solved[1][2][2] = S7;
+            
+            solved[2][0][0] = solved[2][0][2];
+            solved[2][0][1] = solved[2][1][2];
+            solved[2][0][2] = solved[2][2][2];
+            solved[2][1][0] = B2;
+            solved[2][1][2] = solved[2][2][1];
+            solved[2][2][0] = B1;
+            solved[2][2][1] = B4;
+            solved[2][2][2] = B7;
+        }
 	}
 	
 	public static void copy()

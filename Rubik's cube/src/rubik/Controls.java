@@ -83,7 +83,6 @@ public class Controls {
 				{
 					if(event.isShiftDown())
 					{
-						//Moves.printState();
 						Moves.copy();
 						Moves.turn("Li");
 						Moves.move = "Li";
@@ -91,7 +90,6 @@ public class Controls {
 					}
 					else
 					{
-						//Moves.printState();
 						Moves.copy();
 						Moves.turn("L");
 						Moves.move = "L";
@@ -108,7 +106,6 @@ public class Controls {
 				{
 					if(event.isShiftDown())
 					{
-						//Moves.printState();
 						Moves.copy();
 						Moves.turn("Ri");
 						Moves.move = "Ri";
@@ -116,7 +113,6 @@ public class Controls {
 					}
 					else
 					{
-						//Moves.printState();
 						Moves.copy();
 						Moves.turn("R");
 						Moves.move = "R";
@@ -133,7 +129,6 @@ public class Controls {
 				{
 					if(event.isShiftDown())
 					{
-						//Moves.printState();
 						Moves.copy();
 						Moves.turn("Fi");
 						Moves.move = "Fi";
@@ -141,7 +136,6 @@ public class Controls {
 					}
 					else
 					{
-						//Moves.printState();
 						Moves.copy();
 						Moves.turn("F");
 						Moves.move = "F";
@@ -158,7 +152,6 @@ public class Controls {
 				{
 					if(event.isShiftDown())
 					{
-						//Moves.printState();
 						Moves.copy();
 						Moves.turn("Bi");
 						Moves.move = "Bi";
@@ -166,7 +159,6 @@ public class Controls {
 					}
 					else
 					{
-						//Moves.printState();
 						Moves.copy();
 						Moves.turn("B");
 						Moves.move = "B";
@@ -183,7 +175,6 @@ public class Controls {
 				{
 					if(event.isShiftDown())
 					{
-						//Moves.printState();
 						Moves.copy();
 						Moves.turn("Ui");
 						Moves.move = "Ui";
@@ -191,7 +182,6 @@ public class Controls {
 					}
 					else
 					{
-						//Moves.printState();
 						Moves.copy();
 						Moves.turn("U");
 						Moves.move = "U";
@@ -208,7 +198,6 @@ public class Controls {
 				{
 					if(event.isShiftDown())
 					{
-						//Moves.printState();
 						Moves.copy();
 						Moves.turn("Di");
 						Moves.move = "Di";
@@ -216,11 +205,73 @@ public class Controls {
 					}
 					else
 					{
-						//Moves.printState();
 						Moves.copy();
 						Moves.turn("D");
 						Moves.move = "D";
 						//Moves.printState();
+					}
+					
+					Moves.moveFlagOld = Moves.moveFlag;
+					Moves.moveFlag = true;
+				}
+			}
+			else if (KeyCode.X.equals(event.getCode()))
+			{
+				if(!Moves.moveFlag)
+				{
+					if(event.isShiftDown())
+					{
+						Moves.turnCube("Xi");
+						Moves.move = "Xi";
+//						Moves.printState();
+					}
+					else
+					{
+						Moves.turnCube("X");
+						Moves.move = "X";
+//						Moves.printState();
+					}
+					
+					Moves.moveFlagOld = Moves.moveFlag;
+					Moves.moveFlag = true;
+				}
+			}
+			else if (KeyCode.Y.equals(event.getCode()))
+			{
+				if(!Moves.moveFlag)
+				{
+					if(event.isShiftDown())
+					{
+						Moves.turnCube("Yi");
+						Moves.move = "Yi";
+//						Moves.printState();
+					}
+					else
+					{
+						Moves.turnCube("Y");
+						Moves.move = "Y";
+//						Moves.printState();
+					}
+					
+					Moves.moveFlagOld = Moves.moveFlag;
+					Moves.moveFlag = true;
+				}
+			}
+			else if (KeyCode.Z.equals(event.getCode()))
+			{
+				if(!Moves.moveFlag)
+				{
+					if(event.isShiftDown())
+					{
+						Moves.turnCube("Zi");
+						Moves.move = "Zi";
+//						Moves.printState();
+					}
+					else
+					{
+						Moves.turnCube("Z");
+						Moves.move = "Z";
+//						Moves.printState();
 					}
 					
 					Moves.moveFlagOld = Moves.moveFlag;

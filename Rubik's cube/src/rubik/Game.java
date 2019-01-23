@@ -97,7 +97,7 @@ public class Game extends Application {
 									rotationDif.add(0.0);
 								}
 							}
-					mesh = meshes.get("S2");
+					mesh = meshes.get(Moves.rubik[1][0][1]);
 					mesh.setRotationAxis(Rotate.Y_AXIS);
 					kockice.put(mesh, mesh.getRotate());
 					
@@ -120,7 +120,7 @@ public class Game extends Application {
 									rotationDif.add(0.0);
 								}
 							}
-					mesh = meshes.get("S8");
+					mesh = meshes.get(Moves.rubik[1][2][1]);
 					mesh.setRotationAxis(Rotate.Y_AXIS);
 					kockice.put(mesh, mesh.getRotate());
 					
@@ -143,7 +143,7 @@ public class Game extends Application {
 									rotationDif.add(0.0);
 								}
 							}
-					mesh = meshes.get("S4");
+					mesh = meshes.get(Moves.rubik[1][1][0]);
 					mesh.setRotationAxis(Rotate.X_AXIS);
 					kockice.put(mesh, mesh.getRotate());
 					
@@ -166,7 +166,7 @@ public class Game extends Application {
 									rotationDif.add(0.0);
 								}
 							}
-					mesh = meshes.get("S6");
+					mesh = meshes.get(Moves.rubik[1][1][2]);
 					mesh.setRotationAxis(Rotate.X_AXIS);
 					kockice.put(mesh, mesh.getRotate());
 					
@@ -189,7 +189,7 @@ public class Game extends Application {
 									rotationDif.add(0.0);
 								}
 							}
-					mesh = meshes.get("F5");
+					mesh = meshes.get(Moves.rubik[0][1][1]);
 					mesh.setRotationAxis(Rotate.Z_AXIS);
 					kockice.put(mesh, mesh.getRotate());
 					
@@ -212,12 +212,57 @@ public class Game extends Application {
 									rotationDif.add(0.0);
 								}
 							}
-					mesh = meshes.get("B5");
+					mesh = meshes.get(Moves.rubik[2][1][1]);
 					mesh.setRotationAxis(Rotate.Z_AXIS);
 					kockice.put(mesh, mesh.getRotate());
 					
 					rotationDif.add(0.0);
 
+				}
+				else if(Moves.move.contains("X"))
+				{
+					rotationDif.clear();
+					
+					for(int i=0; i<3; i++)
+						for(int j=0; j<3; j++)
+							for(int k=0; k<3; k++)
+							{
+									mesh = meshes.get(Moves.rubik[i][j][k]);
+									mesh.setRotationAxis(Rotate.X_AXIS);
+									kockice.put(mesh, mesh.getRotate());
+									
+									rotationDif.add(0.0);
+							}
+				}
+				else if(Moves.move.contains("Y"))
+				{
+					rotationDif.clear();
+					
+					for(int i=0; i<3; i++)
+						for(int j=0; j<3; j++)
+							for(int k=0; k<3; k++)
+							{
+									mesh = meshes.get(Moves.rubik[i][j][k]);
+									mesh.setRotationAxis(Rotate.Y_AXIS);
+									kockice.put(mesh, mesh.getRotate());
+									
+									rotationDif.add(0.0);
+							}
+				}
+				else if(Moves.move.contains("Z"))
+				{
+					rotationDif.clear();
+					
+					for(int i=0; i<3; i++)
+						for(int j=0; j<3; j++)
+							for(int k=0; k<3; k++)
+							{
+									mesh = meshes.get(Moves.rubik[i][j][k]);
+									mesh.setRotationAxis(Rotate.Z_AXIS);
+									kockice.put(mesh, mesh.getRotate());
+									
+									rotationDif.add(0.0);
+							}
 				}
 					
 				Moves.moveFlagOld = true; //da ne bi vise bili isti, posto je inicijalizacija gotova
@@ -440,6 +485,114 @@ public class Game extends Application {
 						{
 							if(Moves.move.contains("i")) r = 90.0;
 							else r = -90.0;
+						}
+						a.prepend(new Rotate(r-rotationDif.get(br), Rotate.Z_AXIS));
+	                    rotationDif.set(br, rotationDif.get(br) + (r-rotationDif.get(br)));
+	                    mesh.getTransforms().setAll(a);
+	                    br++;
+					}
+				}
+				else if(Moves.move.contains("X"))
+				{
+					int br = 0;
+					
+					for (Map.Entry<MeshView, Double> entry : kockice.entrySet()) 
+					{
+						MeshView mesh = entry.getKey();
+						Double s = entry.getValue();
+						
+						mesh.setRotationAxis(Rotate.X_AXIS);
+						
+						double d = s;
+						if(Moves.move.equals("X")) d -= 90.0f;
+						else if(Moves.move.equals("Xi")) d += 90.0f;
+						double r = s*(1 - k) + (d * k);
+						if((Math.abs(r-d) < epsilon) || time>0.49)
+						{
+							Moves.moveFlagOld = false;
+							Moves.moveFlag = false;
+						}
+						ObservableList<Transform> x = mesh.getTransforms();
+						Affine a = new Affine();
+						x.forEach(n -> {
+							a.append(n);
+						});						
+						if(!Moves.moveFlag)
+						{
+							if(Moves.move.contains("i")) r = 90.0;
+							else r = -90.0;
+						}
+						a.prepend(new Rotate(r-rotationDif.get(br), Rotate.X_AXIS));
+	                    rotationDif.set(br, rotationDif.get(br) + (r-rotationDif.get(br)));
+	                    mesh.getTransforms().setAll(a);
+	                    br++;
+					}
+				}
+				else if(Moves.move.contains("Y"))
+				{
+					int br = 0;
+					
+					for (Map.Entry<MeshView, Double> entry : kockice.entrySet()) 
+					{
+						MeshView mesh = entry.getKey();
+						Double s = entry.getValue();
+						
+						mesh.setRotationAxis(Rotate.Y_AXIS);
+						
+						double d = s;
+						if(Moves.move.equals("Y")) d += 90.0f;
+						else if(Moves.move.equals("Yi")) d -= 90.0f;
+						double r = s*(1 - k) + (d * k);
+						if((Math.abs(r-d) < epsilon) || time>0.49)
+						{
+							Moves.moveFlagOld = false;
+							Moves.moveFlag = false;
+						}
+						ObservableList<Transform> x = mesh.getTransforms();
+						Affine a = new Affine();
+						x.forEach(n -> {
+							a.append(n);
+						});						
+						if(!Moves.moveFlag)
+						{
+							if(Moves.move.contains("i")) r = -90.0;
+							else r = 90.0;
+						}
+						a.prepend(new Rotate(r-rotationDif.get(br), Rotate.Y_AXIS));
+	                    rotationDif.set(br, rotationDif.get(br) + (r-rotationDif.get(br)));
+	                    mesh.getTransforms().setAll(a);
+	                    br++;
+					}
+				}
+				else if(Moves.move.contains("Z"))
+				{
+					int br = 0;
+					
+					for (Map.Entry<MeshView, Double> entry : kockice.entrySet()) 
+					{
+						MeshView mesh = entry.getKey();
+						Double s = entry.getValue();
+						
+						mesh.setRotationAxis(Rotate.Z_AXIS);
+						
+						double d = s;
+						if(Moves.move.equals("Z")) d += 90.0f;
+						else if(Moves.move.equals("Zi")) d -= 90.0f;
+						double r = s*(1 - k) + (d * k);
+						if((Math.abs(r-d) < epsilon) || time>0.49)
+						{
+							Moves.moveFlagOld = false;
+							Moves.moveFlag = false;
+						}
+						ObservableList<Transform> x = mesh.getTransforms();
+						Affine a = new Affine();
+						x.forEach(n -> {
+							a.append(n);
+						});
+						if(!Moves.moveFlag)
+						{
+							if(Moves.move.contains("i")) r = -90.0;
+							else r = 90.0;
 						}
 						a.prepend(new Rotate(r-rotationDif.get(br), Rotate.Z_AXIS));
 	                    rotationDif.set(br, rotationDif.get(br) + (r-rotationDif.get(br)));
