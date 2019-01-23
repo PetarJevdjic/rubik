@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.plaf.metal.MetalPopupMenuSeparatorUI;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
@@ -21,6 +23,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Separator;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -671,7 +675,8 @@ public class Game extends Application {
 		MenuItem option1 = new MenuItem("New Game (Enter)");
 		MenuItem option2 = new MenuItem("Reset rotation (Space)");
 		MenuItem option3 = new MenuItem("Fullscreen (F12)");
-		MenuItem option4 = new MenuItem("Exit game (Esc)");
+		MenuItem option4 = new MenuItem("Help");
+		MenuItem option5 = new MenuItem("Exit game (Esc)");
 		
 		option1.setOnAction(e -> {
 			c.newGame();
@@ -686,10 +691,16 @@ public class Game extends Application {
 		});
 		
 		option4.setOnAction(e -> {
+			c.help();
+		});
+		
+		option5.setOnAction(e -> {
 			c.quit();
 		});
 		
-		file.getItems().addAll(option1, option2, option3, option4);
+		SeparatorMenuItem separator = new SeparatorMenuItem();
+		
+		file.getItems().addAll(option1, option2, option3, new SeparatorMenuItem(), option4, new SeparatorMenuItem(), option5);
 		
 		MenuBar menuBar = new MenuBar();
 		menuBar.getMenus().add(file);

@@ -367,4 +367,23 @@ public class Controls {
 			System.exit(1);
 		}
 	}
+	
+	public void help()
+	{
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Information Dialog");
+		alert.setHeaderText("Controls:\n"
+				+ "\n\t1. To rotate the desired side of the cube clockwise use the folowing keys: U (up), D (down), L (left), R (right), F (front) and B (back).\n"
+				+ "\t\tTo rotate counter clockwise hold Shift while rotating.\n"
+				+ "\t2. To rotate the whole cube 90 degrees around the desired axis, use keys X, Y, and Z.\n"
+				+ "\t\tCounter clockwise rotations are also possible.\n"
+				+ "\t3. To spectate the cube hold left mouse click and drag the cursor.\n"
+				+ "\t\tThis way you can rotate the cube around X and Y axis.\n"
+				+ "\t\tTo rotate around the Z axis hold right mouse button instead.\n"
+				+ "\t\tTo reset the cube rotation use Space.\n"
+				+ "\t4. To zoom in or out use mouse scroll.\n"
+				+ "\t5. To scramble the cube and start a new game use Enter.\n"
+				+ "\t6. To enter Fullscreen mode use F12.");	
+		alert.showAndWait();
+	}
 }
